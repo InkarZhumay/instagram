@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router();
-const {verifyCode} = require('./controllers')
+const {createUser, editUser} = require('./controller')
 
-router.post('/api/auth/verifycode', verifyCode)
+router.post('/api/auth/createUser', createUser)
+router.post('/api/auth/editUser', editUser)
 
 module.exports = router;

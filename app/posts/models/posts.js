@@ -1,30 +1,26 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../../config/db');
+const sequelize = require('../../../config/db');
+const User = require('../../auth/User')
 
+const posts = sequelize.define('posts', {
+    publish_date: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    description: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    image_id: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    }
 
-const comments = sequelize.define('comments', {
-    text: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    user_id: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    post_id: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    stories_id: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
 },{
   timestamps: false // Отключение автоматического создания полей createdAt и updatedAt
 }
 );
 
-// User.belongsTo(Role, {foreignKey: 'roleId'});
-// User.belongsTo(Company, { foreignKey: 'companyId'});
+posts.belongsTo(User, {foreignKey: 'user_id'});
 
-module.exports = comments;
+module.exports = posts;

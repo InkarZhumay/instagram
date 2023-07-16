@@ -9,35 +9,35 @@ const User = sequelize.define('User', {
         allowNull: true,
         unique: true
     },
-    phone_number: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        unique: true
-    },
-    full_name: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-        isEmail: true,
-        },
-    },
+    // phone_number: {
+    //     type: DataTypes.STRING,
+    //     allowNull: true,
+    //     unique: true
+    // },
+    // full_name: {
+    //     type: DataTypes.STRING,
+    //     allowNull: true,
+    // },
+    // email: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false,
+    //     unique: true,
+    //     validate: {
+    //     isEmail: true,
+    //     },
+    // },
     password: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    bio: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    website_link: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
+    // bio: {
+    //     type: DataTypes.STRING,
+    //     allowNull: true,
+    // },
+    // website_link: {
+    //     type: DataTypes.STRING,
+    //     allowNull: true,
+    // },
 },{
   timestamps: false // Отключение автоматического создания полей createdAt и updatedAt
 }

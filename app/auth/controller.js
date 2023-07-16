@@ -1,53 +1,48 @@
 const AuthCode = require('./AuthCode')
+const jwt = require('jsonwebtoken');
 
 const User = require('./User');
 
-const verifyCode = async (req, res) => {
-    console.log(req.body);
+const {jwtOptions} = require('./passport')
 
-    const authCode = await AuthCode.findOne({
-        where: {email: req.body.email},
-        // order: [['valid_till', 'DESC']],
-    })
+const createUser = async (req, res) => {
+    console.log('create user start');  
+    console.log(req.body.username); 
+    console.log(req.body.password); 
+  
+        await User.create ({
+                username:req.body.username,
+                password:req.body.password
+            });
 
-    if(authCode){
-        res.status(401).send({error: "code is invalid"});
-    } else if(authCode.code !== req.body.code) {
-        res.status(401).send({error: "code is invalid"});
-    }
-    else {    
-
-        let user = await User.findOne({where: {email: req.body.email}});
-        const role = await Role.findOne({where: {name: 'employee'}})
-
-        if(!user) {
-            
-            user = await User.create ({
-                roleId: role.isSoftDeleted,
-                email:req.body.email
-            })
-        }
-
-        
         const token = jwt.sign({
-            id: user.id,
-            email: user.email,
-            full_name: user.full_name,
-            phone: user.phone,
-            role: {
-                id: role.id,
-                name: role.name
-            }, 
+            username:req.body.username,
+            password:req.body.password,
         }, jwtOptions.secretOrKey, {
             expiresIn: 24 * 60 * 60 * 365
         });
         res.status(200).send({token});
-    }
-
-    // console.log(new Date(authCode.valid_till).getTime() > Date.now());
-    
 }
 
+const editUser = async (req, res) => {
+    console.log(req.body.username); 
+    console.log(req.body.password); 
+        
+        await User.edit ({
+                username:req.body.username,
+                password:req.body.password
+            });
+            
+        const token = jwt.sign({
+            username:req.body.username,
+            password:req.body.password,
+        }, jwtOptions.secretOrKey, {
+            expiresIn: 24 * 60 * 60 * 365
+        });
+        res.status(200).send({token});
+}    
+
 module.exports = {
-    verifyCode
+    createUser,
+    editUser
 }

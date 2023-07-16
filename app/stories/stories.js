@@ -11,16 +11,12 @@ const stories = sequelize.define('stories', {
         type: DataTypes.DATE,
         allowNull: true,
     },
-    user_id: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
+
 },{
   timestamps: false // Отключение автоматического создания полей createdAt и updatedAt
 }
 );
 
-// User.belongsTo(Role, {foreignKey: 'roleId'});
-// User.belongsTo(Company, {foreignKey: 'companyId'});
+// stories.belongsTo(User, {foreignKey: 'user_id'});
 
 module.exports = stories;
